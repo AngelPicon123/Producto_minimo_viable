@@ -1,5 +1,5 @@
 <?php
-Class DataBse
+Class DataBase
 {
     private $host = "localhost";
     private $db_name="Producto_minimo_viable";
