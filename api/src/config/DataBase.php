@@ -1,22 +1,19 @@
 <?php
-Class DataBase
+class DataBase
 {
     private $host = "localhost";
-    private $db_name="Producto_minimo_viable";
+    private $db_name = "Producto_minimo_viable";
     private $username = "root";
-    private $password="";
+    private $password = "";
     public $conn;
 
-    public function getConnection() 
+    public function getConnection()
     {
         $this->conn = null;
-        try 
-        {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);         
+        try {
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->exec("set names utf8");
-        } 
-        catch (PDOException $exception) 
-        {
+        } catch (PDOException $exception) {
             echo "Error de conexión: " . $exception->getMessage();
         }
 

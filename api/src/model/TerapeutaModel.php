@@ -3,7 +3,7 @@
 class TerapeutaModel
 {
     private $conn;
-    private $table_name = "terapeuta"; 
+    private $table_name = "terapeuta";
 
     public function __construct($database)
     {
@@ -45,7 +45,7 @@ class TerapeutaModel
     // BUSCAR TERAPEUTA POR ID
     public function getTerapeutaById($id_terapeuta)
     {
-        $sql = "SELECT * FROM " . $this->table_name . " WHERE id_terapeuta = :id"; 
+        $sql = "SELECT * FROM " . $this->table_name . " WHERE id_terapeuta = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id_terapeuta, PDO::PARAM_INT);
         $stmt->execute();
@@ -57,7 +57,7 @@ class TerapeutaModel
     {
         $sql = "SELECT * FROM " . $this->table_name . " WHERE dni_terapeuta = :dni_terapeuta";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':dni', $dni_terapeuta); 
+        $stmt->bindParam(':dni', $dni_terapeuta);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -67,7 +67,7 @@ class TerapeutaModel
     {
         $sql = "UPDATE " . $this->table_name . " SET dni_terapeuta = :dni_terapeuta, nombre = :nombre, apellido = :apellido, correo = :correo, 
                 direccion = :direccion, provincia = :provincia, region = :region, sexo = :sexo, 
-                nroTelefonico = :nroTelefonico WHERE id_terapeuta = :id"; 
+                nroTelefonico = :nroTelefonico WHERE id_terapeuta = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':dni', $dni_terapeuta);
         $stmt->bindParam(':nombre', $nombre);
@@ -75,7 +75,7 @@ class TerapeutaModel
         $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':direccion', $direccion);
         $stmt->bindParam(':provincia', $provincia);
-        $stmt->bindParam(':region', $region); 
+        $stmt->bindParam(':region', $region);
         $stmt->bindParam(':sexo', $sexo);
         $stmt->bindParam(':nroTelefonico', $nroTelefonico);
         $stmt->bindParam(':id', $id_terapeuta, PDO::PARAM_INT);
@@ -85,7 +85,7 @@ class TerapeutaModel
     // Eliminar Terapeuta
     public function deleteTerapeuta($id_terapeuta)
     {
-        $sql = "DELETE FROM " . $this->table_name . " WHERE id_terapeuta = :id"; 
+        $sql = "DELETE FROM " . $this->table_name . " WHERE id_terapeuta = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id_terapeuta, PDO::PARAM_INT);
         $stmt->execute();

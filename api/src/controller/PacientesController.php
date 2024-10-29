@@ -3,33 +3,37 @@
 require_once __DIR__ . '/../models/PacienteModel.php';
 require_once __DIR__ . '/../config/DataBase.php';
 
-class PacientesController {
+class PacientesController
+{
     private $db;
     private $model;
 
-    public function __construct() {
-        $database = new DataBse();
+    public function __construct()
+    {
+        $database = new DataBase();
         $this->db = $database->getConnection();
-        $this->model = new Paciente($this->db);
+        $this->model = new PacienteModel($this->db);
     }
 
-    public function obtenerTodosPacientes() {
+    public function getAllPacientes()
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-    
-        $pacientes = $this->model->obtenerPacientes();
+
+        $pacientes = $this->model->getAllPacientes();
         echo json_encode($pacientes);
     }
-    
-    public function buscarPacientePorId() {
+
+    public function findByIdPaciente()
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-    
+
         $data = json_decode(file_get_contents("php://input"));
-    
+
         if (!empty($data->id_paciente)) {
-            $paciente = $this->model->obtenerPacientePorId($data->id_paciente);
-    
+            $paciente = $this->model->findByIdPaciente($data->id_paciente);
+
             if ($paciente) {
                 echo json_encode($paciente);
             } else {
@@ -41,18 +45,21 @@ class PacientesController {
             echo json_encode(["message" => "Entrada inválida"]);
         }
     }
-    
-    public function crearPaciente() {
+
+    public function createPaciente()
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-    
+
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!empty($data->dni_paciente) && !empty($data->nombre) && !empty($data->apellido) && 
-            !empty($data->correo) && !empty($data->direccion) && !empty($data->provincia) && 
-            !empty($data->region) && !empty($data->sexo) && !empty($data->nroTelefonico)) {
-            
-            $result = $this->model->crearPaciente(
+        if (
+            !empty($data->dni_paciente) && !empty($data->nombre) && !empty($data->apellido) &&
+            !empty($data->correo) && !empty($data->direccion) && !empty($data->provincia) &&
+            !empty($data->region) && !empty($data->sexo) && !empty($data->nroTelefonico)
+        ) {
+
+            $result = $this->model->createPaciente(
                 $data->dni_paciente,
                 $data->nombre,
                 $data->apellido,
@@ -63,7 +70,7 @@ class PacientesController {
                 $data->sexo,
                 $data->nroTelefonico
             );
-    
+
             if ($result) {
                 echo json_encode(["message" => "Paciente creado con éxito"]);
             } else {
@@ -75,19 +82,22 @@ class PacientesController {
             echo json_encode(["message" => "Entrada inválida"]);
         }
     }
-    
-    
-    public function actualizarPaciente($id_paciente) {
+
+
+    public function updatePaciente($id_paciente)
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
-    
+
         $data = json_decode(file_get_contents("php://input"));
-    
-        if (!empty($data->dni_paciente) && !empty($data->nombre) && !empty($data->apellido) &&
+
+        if (
+            !empty($data->dni_paciente) && !empty($data->nombre) && !empty($data->apellido) &&
             !empty($data->correo) && !empty($data->direccion) && !empty($data->provincia) &&
-            !empty($data->region) && !empty($data->sexo) && !empty($data->nroTelefonico)) {
-    
-            $updated = $this->model->actualizarPaciente(
+            !empty($data->region) && !empty($data->sexo) && !empty($data->nroTelefonico)
+        ) {
+
+            $updated = $this->model->updatePaciente(
                 $id_paciente,
                 $data->dni_paciente,
                 $data->nombre,
@@ -99,7 +109,7 @@ class PacientesController {
                 $data->sexo,
                 $data->nroTelefonico
             );
-    
+
             if ($updated) {
                 echo json_encode(["message" => "Paciente actualizado con éxito"]);
             } else {
@@ -111,17 +121,19 @@ class PacientesController {
             echo json_encode(["message" => "Entrada inválida"]);
         }
     }
-    
-    
-    public function eliminarPaciente($id_paciente) {
+
+
+    public function deletePaciente($id_paciente)
+    {
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Allow-Methods: DELETE");
-    
-        if ($this->model->eliminarPacientePorId($id_paciente)) {
+
+        if ($this->model->deletePaciente($id_paciente)) {
             echo json_encode(["message" => "Paciente eliminado con éxito"]);
         } else {
             http_response_code(404);
             echo json_encode(["message" => "No se pudo eliminar el paciente"]);
         }
     }
+}

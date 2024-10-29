@@ -76,9 +76,9 @@ class TerapeutaController
         $data = json_decode(file_get_contents("php://input"));
 
         if (
-            
+
             !empty($data->dni_terapeuta) && !empty($data->nombre) && !empty($data->apellido) && !empty($data->correo) &&
-            !empty($data->direccion) && !empty($data->provincia) && !empty($data->region)  && !empty($data->sexo) && !empty($data->nroTelefonico)
+            !empty($data->direccion) && !empty($data->provincia) && !empty($data->region) && !empty($data->sexo) && !empty($data->nroTelefonico)
         ) {
             // Insertar el nuevo terapeuta en la base de datos
             $result = $this->model->createTerapeuta(
@@ -113,10 +113,12 @@ class TerapeutaController
 
         $data = json_decode(file_get_contents("php://input"));
 
-        if (!empty($data->nombre) && !empty($data->apellido) && !empty($data->correo) &&
+        if (
+            !empty($data->nombre) && !empty($data->apellido) && !empty($data->correo) &&
             !empty($data->direccion) && !empty($data->provincia) && !empty($data->region) &&
-            !empty($data->dni) && !empty($data->sexo) && !empty($data->nroTelefonico)) {
-            
+            !empty($data->dni) && !empty($data->sexo) && !empty($data->nroTelefonico)
+        ) {
+
             $updated = $this->model->updateTerapeuta(
                 $id_terapeuta,
                 $data->dni_terapeuta,
