@@ -1,8 +1,8 @@
 <?php
 
-require_once '../src/config/DataBse.php';
+require_once '../src/config/DataBase.php';
 
-$database= new DataBse();
+$database= new DataBase();
 
 $conn = $database->getConnection();
 
